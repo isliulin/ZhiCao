@@ -24,9 +24,9 @@ struct MMA7660_s
   int8_t z;
 	int8_t status;
 	
-	int16_t RollAngle; //ºá¹ö½Ç
-	int16_t PitchAngle; //¸©Ñö½Ç
-	int16_t TiltAngle; //¸©Ñö½Ç
+	int16_t RollAngle; //æ¨ªæ»šè§’
+	int16_t PitchAngle; //ä¿¯ä»°è§’
+	int16_t TiltAngle; //ä¿¯ä»°è§’
 };
 
 //struct HMC5883_s s_HMC5883_Var;

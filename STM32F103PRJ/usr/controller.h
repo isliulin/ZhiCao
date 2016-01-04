@@ -3,7 +3,7 @@
 #include "stm32f10x.h"
 #include "stm32f10x_tim.h"
 
-#define SYS_CLK 64000000   //系统时钟64MHz
+#define SYS_CLK 64000000   //绯荤粺鏃堕挓64MHz
 
 #define X1_CLR GPIOC->BRR = GPIO_Pin_4
 #define X1_SET GPIOC->BSRR = GPIO_Pin_4
@@ -27,12 +27,12 @@
 #define LED_ON GPIOC->BSRR = GPIO_Pin_0
 
 
-extern u8 CCD_Pixel[128];  //保存CCD数据
-extern int32_t nPauseMeter[4];  //暂停米数
-extern int32_t nStopMeter; //结束米数
-extern int32_t nCurrentMeter; //当前米数
+extern u8 CCD_Pixel[128];  //淇濆瓨CCD鏁版嵁
+extern int32_t nPauseMeter[4];  //鏆傚仠绫虫暟
+extern int32_t nStopMeter; //缁撴潫绫虫暟
+extern int32_t nCurrentMeter; //褰撳墠绫虫暟
 
-void Controller_Init(u8 nInterval);  //控制周期为nInterval毫秒
+void Controller_Init(u8 nInterval);  //鎺у埗鍛ㄦ湡涓簄Interval姣
 void Controller_Update(void);
 bool Controller_is_Line_Detected(void);
 void Controller_Stop(void);

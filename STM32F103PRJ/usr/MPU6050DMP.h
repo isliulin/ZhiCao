@@ -1,7 +1,7 @@
 #ifndef __MPU6050DMP_H
 #define __MPU6050DMP_H
 
-/*ÔÚÊ¹ÓÃÇ°£¬ÏÈÔÚÔ¤±àÒë·ûºÅ¶¨ÒåÖĞ¶¨ÒåMPU6050ºÍEMPL_TARGET_STM32*/
+/*åœ¨ä½¿ç”¨å‰ï¼Œå…ˆåœ¨é¢„ç¼–è¯‘ç¬¦å·å®šä¹‰ä¸­å®šä¹‰MPU6050å’ŒEMPL_TARGET_STM32*/
 
 
 #include "stm32f10x.h"
@@ -10,12 +10,12 @@
 #include "inv_mpu_dmp_motion_driver.h"
 
 //****************************************
-// ¶¨ÒåMPU6050ÄÚ²¿µØÖ·
+// å®šä¹‰MPU6050å†…éƒ¨åœ°å€
 //****************************************
-#define	SMPLRT_DIV		0x19	//ÍÓÂİÒÇ²ÉÑùÂÊ£¬µäĞÍÖµ£º0x07(125Hz)
-#define	MPU6050_CONFIG			0x1A	//µÍÍ¨ÂË²¨ÆµÂÊ£¬µäĞÍÖµ£º0x06(5Hz)
-#define	GYRO_CONFIG		0x1B	//ÍÓÂİÒÇ×Ô¼ì¼°²âÁ¿·¶Î§£¬µäĞÍÖµ£º0x18(²»×Ô¼ì£¬2000deg/s)
-#define	ACCEL_CONFIG	0x1C	//¼ÓËÙ¼Æ×Ô¼ì¡¢²âÁ¿·¶Î§¼°¸ßÍ¨ÂË²¨ÆµÂÊ£¬µäĞÍÖµ£º0x01(²»×Ô¼ì£¬2G£¬5Hz)
+#define	SMPLRT_DIV		0x19	//é™€èºä»ªé‡‡æ ·ç‡ï¼Œå…¸å‹å€¼ï¼š0x07(125Hz)
+#define	MPU6050_CONFIG			0x1A	//ä½é€šæ»¤æ³¢é¢‘ç‡ï¼Œå…¸å‹å€¼ï¼š0x06(5Hz)
+#define	GYRO_CONFIG		0x1B	//é™€èºä»ªè‡ªæ£€åŠæµ‹é‡èŒƒå›´ï¼Œå…¸å‹å€¼ï¼š0x18(ä¸è‡ªæ£€ï¼Œ2000deg/s)
+#define	ACCEL_CONFIG	0x1C	//åŠ é€Ÿè®¡è‡ªæ£€ã€æµ‹é‡èŒƒå›´åŠé«˜é€šæ»¤æ³¢é¢‘ç‡ï¼Œå…¸å‹å€¼ï¼š0x01(ä¸è‡ªæ£€ï¼Œ2Gï¼Œ5Hz)
 #define	ACCEL_XOUT_H	0x3B
 #define	ACCEL_XOUT_L	0x3C
 #define	ACCEL_YOUT_H	0x3D
@@ -30,10 +30,10 @@
 #define	GYRO_YOUT_L		0x46
 #define	GYRO_ZOUT_H		0x47
 #define	GYRO_ZOUT_L		0x48
-#define	PWR_MGMT_1		0x6B	//µçÔ´¹ÜÀí£¬µäĞÍÖµ£º0x00(Õı³£ÆôÓÃ)
-#define	WHO_AM_I		0x75	//IICµØÖ·¼Ä´æÆ÷(Ä¬ÈÏÊıÖµ0x68£¬Ö»¶Á)
-#define	MPU6050_Addr	0xD0	//IICĞ´ÈëÊ±µÄµØÖ·×Ö½ÚÊı¾İ£¬+1Îª¶ÁÈ¡
-#define MPU6050_I2C I2C1 //MPU6050 I2C¶Ë¿Ú
+#define	PWR_MGMT_1		0x6B	//ç”µæºç®¡ç†ï¼Œå…¸å‹å€¼ï¼š0x00(æ­£å¸¸å¯ç”¨)
+#define	WHO_AM_I		0x75	//IICåœ°å€å¯„å­˜å™¨(é»˜è®¤æ•°å€¼0x68ï¼Œåªè¯»)
+#define	MPU6050_Addr	0xD0	//IICå†™å…¥æ—¶çš„åœ°å€å­—èŠ‚æ•°æ®ï¼Œ+1ä¸ºè¯»å–
+#define MPU6050_I2C I2C1 //MPU6050 I2Cç«¯å£
 
 /* MPU6050 Structure definition */
 struct MPU6050_RawData_s
@@ -62,25 +62,25 @@ int stm32_i2c_read(unsigned char slave_addr,
                     unsigned char length,
                     unsigned char *data);
 
-//¶¨Ê±ÑÓÊ±³ÌĞò
+//å®šæ—¶å»¶æ—¶ç¨‹åº
 /*
-ÔÚmain.cµÄNVIC_Configurationº¯ÊıÖĞ
-ÉèÖÃSysTick_Config(720)£¬Ã¿10us²úÉúÒ»´ÎSysTick
-ÔÚstm32f10x_it.cÖĞµÄSysTick_Handler´¦ÀíSysTickÖĞ¶Ï£¬
-Ö´ĞĞTimingDelay_Decrement();
-²¢ÇÒÃ¿100¸ö10usÊ¹TimeStamp_ms¼Ó1
+åœ¨main.cçš„NVIC_Configurationå‡½æ•°ä¸­
+è®¾ç½®SysTick_Config(720)ï¼Œæ¯10usäº§ç”Ÿä¸€æ¬¡SysTick
+åœ¨stm32f10x_it.cä¸­çš„SysTick_Handlerå¤„ç†SysTickä¸­æ–­ï¼Œ
+æ‰§è¡ŒTimingDelay_Decrement();
+å¹¶ä¸”æ¯100ä¸ª10usä½¿TimeStamp_msåŠ 1
 */
-static __IO uint32_t TimingDelay; //SysTick¼ÆÊı±äÁ¿
+static __IO uint32_t TimingDelay; //SysTickè®¡æ•°å˜é‡
 extern __IO uint32_t TimeStamp_ms;
 
-void TimingDelay_Decrement(void);//»ñÈ¡½ÚÅÄ³ÌĞò
+void TimingDelay_Decrement(void);//è·å–èŠ‚æ‹ç¨‹åº
 
 
-void Delay_us(__IO uint32_t nTime);//¶¨Ê±ÑÓÊ±³ÌĞò 10usÎªµ¥Î»
-void Delay_ms(__IO uint32_t nTime);//¶¨Ê±ÑÓÊ±³ÌĞò 1msÎªµ¥Î»
+void Delay_us(__IO uint32_t nTime);//å®šæ—¶å»¶æ—¶ç¨‹åº 10usä¸ºå•ä½
+void Delay_ms(__IO uint32_t nTime);//å®šæ—¶å»¶æ—¶ç¨‹åº 1msä¸ºå•ä½
 
-int stm32_get_clock_ms(unsigned long *count); //»ñÈ¡Ê±ÖÓºÁÃëÊı
-//¶¨Ê±ÑÓÊ±³ÌĞò½áÊø
+int stm32_get_clock_ms(unsigned long *count); //è·å–æ—¶é’Ÿæ¯«ç§’æ•°
+//å®šæ—¶å»¶æ—¶ç¨‹åºç»“æŸ
 
 
 unsigned short inv_orientation_matrix_to_scalar(
@@ -88,7 +88,7 @@ unsigned short inv_orientation_matrix_to_scalar(
 unsigned short inv_row_2_scale(const signed char *row);
 void mpu6050_run_self_test(void);
 
-//×ËÌ¬½á¹¹¶¨Òå
+//å§¿æ€ç»“æ„å®šä¹‰
 struct dmpGravity_s
 {
   float x;
@@ -118,7 +118,7 @@ struct dmpYawPitchRoll_s
 	float roll;
 };
 
-//×ËÌ¬»ñÈ¡º¯Êı¶¨Òå
+//å§¿æ€è·å–å‡½æ•°å®šä¹‰
 int dmpGetGravity(struct dmpGravity_s *v, struct dmpQuaternion_s *q);
 int dmpGetEuler(struct dmpEuler_s *data, struct dmpQuaternion_s *q);
 int dmpGetYawPitchRoll(struct dmpYawPitchRoll_s *data, struct dmpQuaternion_s *q, struct dmpGravity_s *gravity);

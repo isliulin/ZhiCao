@@ -2,7 +2,7 @@
 #define __ENCODER_H
 #include "stm32f10x.h"
 #include "stm32f10x_tim.h"
-#define ENCODER_OVERFLOW 5120    //¼ÆÊýÆ÷Òç³ö´ÎÊý
+#define ENCODER_OVERFLOW 5120    //è®¡æ•°å™¨æº¢å‡ºæ¬¡æ•°
 
 extern __IO int32_t nEncOverFlowCount;
 

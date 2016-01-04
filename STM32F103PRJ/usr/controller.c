@@ -3,10 +3,10 @@
 #include "Encoder.h"
 
 
-u8 CCD_Pixel[128];  //±£´æCCDÊı¾İ
-int32_t nPauseMeter[4];  //ÔİÍ£Ã×Êı
-int32_t nStopMeter; //½áÊøÃ×Êı
-int32_t nCurrentMeter; //µ±Ç°Ã×Êı
+u8 CCD_Pixel[128];  //ä¿å­˜CCDæ•°æ®
+int32_t nPauseMeter[4];  //æš‚åœç±³æ•°
+int32_t nStopMeter; //ç»“æŸç±³æ•°
+int32_t nCurrentMeter; //å½“å‰ç±³æ•°
 bool bLineDetected; 
 void Controller_Init(u8 nInterval)
 {
@@ -14,41 +14,41 @@ void Controller_Init(u8 nInterval)
  TIM_TimeBaseInitTypeDef   TIM_TimeBaseStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-  //ÅäÖÃ±äÆµÆ÷X1~X6¿ØÖÆÊä³ö¶Ë¿Ú
+  //é…ç½®å˜é¢‘å™¨X1~X6æ§åˆ¶è¾“å‡ºç«¯å£
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOB, ENABLE);
 	
 	//PA4=X2,PA5=X3
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;				     
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //¿ÚÏß·­×ªËÙ¶ÈÎª50MHz
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //å£çº¿ç¿»è½¬é€Ÿåº¦ä¸º50MHz
   GPIO_Init(GPIOA, &GPIO_InitStructure);	
 	
 	//PC4=X1, PC5=X6, PC0=LED
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_0;				     
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //¿ÚÏß·­×ªËÙ¶ÈÎª50MHz
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //å£çº¿ç¿»è½¬é€Ÿåº¦ä¸º50MHz
   GPIO_Init(GPIOC, &GPIO_InitStructure);	
 	
 	//PB0=X4,PB1=X5
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1;				     
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //¿ÚÏß·­×ªËÙ¶ÈÎª50MHz
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //å£çº¿ç¿»è½¬é€Ÿåº¦ä¸º50MHz
   GPIO_Init(GPIOB, &GPIO_InitStructure);	
 	
-	//ÅäÖÃÔËĞĞÖÜÆÚ¶¨Ê±Æ÷
+	//é…ç½®è¿è¡Œå‘¨æœŸå®šæ—¶å™¨
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 
  TIM_DeInit(TIM2);
 
- TIM_TimeBaseStructure.TIM_Period=nInterval*1000;		 //ARRµÄÖµ
+ TIM_TimeBaseStructure.TIM_Period=nInterval*1000;		 //ARRçš„å€¼
  TIM_TimeBaseStructure.TIM_Prescaler=0;
- TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1; //²ÉÑù·ÖÆµ
- TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up; //ÏòÉÏ¼ÆÊıÄ£Ê½
+ TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1; //é‡‡æ ·åˆ†é¢‘
+ TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up; //å‘ä¸Šè®¡æ•°æ¨¡å¼
  TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
- TIM_PrescalerConfig(TIM2,SYS_CLK/1000000,TIM_PSCReloadMode_Immediate);//Ê±ÖÓ·ÖÆµÏµÊıSYS_CLK/1000 - 1£¬ËùÒÔ¶¨Ê±Æ÷Ê±ÖÓÎª1K
- TIM_ARRPreloadConfig(TIM2, DISABLE);//½ûÖ¹ARRÔ¤×°ÔØ»º³åÆ÷
- TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);  //ÆôÓÃ¶¨Ê±ÖĞ¶Ï£¬ĞëÔÚÖĞ¶Ï³õÊ¼»¯³ÌĞòÖĞÉè¶¨ÖĞ¶ÏÓÅÏÈ¼¶
+ TIM_PrescalerConfig(TIM2,SYS_CLK/1000000,TIM_PSCReloadMode_Immediate);//æ—¶é’Ÿåˆ†é¢‘ç³»æ•°SYS_CLK/1000 - 1ï¼Œæ‰€ä»¥å®šæ—¶å™¨æ—¶é’Ÿä¸º1K
+ TIM_ARRPreloadConfig(TIM2, DISABLE);//ç¦æ­¢ARRé¢„è£…è½½ç¼“å†²å™¨
+ TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);  //å¯ç”¨å®šæ—¶ä¸­æ–­ï¼Œé¡»åœ¨ä¸­æ–­åˆå§‹åŒ–ç¨‹åºä¸­è®¾å®šä¸­æ–­ä¼˜å…ˆçº§
 
 	nStopMeter=600;
 	nCurrentMeter = 0;
@@ -56,7 +56,7 @@ void Controller_Init(u8 nInterval)
 	
 	bLineDetected = FALSE;
 	
- TIM_Cmd(TIM2, ENABLE);	//¿ªÆôÊ±ÖÓ
+ TIM_Cmd(TIM2, ENABLE);	//å¼€å¯æ—¶é’Ÿ
 }
 
 void Controller_Update(void)
@@ -121,4 +121,4 @@ void Controller_SetSpeed(u8 nSpeedSel)
 	}
 }
 
-//void TIM2_IRQHandler(void){;}    //¶¨Ê±ÖĞ¶Ï
+//void TIM2_IRQHandler(void){;}    //å®šæ—¶ä¸­æ–­

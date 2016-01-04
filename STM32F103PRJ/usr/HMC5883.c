@@ -7,22 +7,22 @@ uint8_t HMC5883_Buffer_Rx[6];
 
 Status InitHMC5883(void)
 {
-		//¼Ä´æÆ÷A£¬D7±ØÐëÎª0£¬D6D5ÔÚÃ¿´Î²âÁ¿Êä³öÖÐÑ¡Ôñ²ÉÑùÆ½¾ùÊý£¨1-8£©00=1; 01=2;10=4; 11=8(È±Ê¡)£»
-	//D4D3D2Êý¾ÝÊä³öËÙÂÊÎ»000~110ÒÀ´ÎÉý¸ß£»D1D0²âÁ¿ÅäÖÃÎ»£¬00-Õý³££¬01ÕýÆ«Ñ¹£¬10¸ºÆ«Ñ¹
+		//å¯„å­˜å™¨Aï¼ŒD7å¿…é¡»ä¸º0ï¼ŒD6D5åœ¨æ¯æ¬¡æµ‹é‡è¾“å‡ºä¸­é€‰æ‹©é‡‡æ ·å¹³å‡æ•°ï¼ˆ1-8ï¼‰00=1; 01=2;10=4; 11=8(ç¼ºçœ)ï¼›
+	//D4D3D2æ•°æ®è¾“å‡ºé€ŸçŽ‡ä½000~110ä¾æ¬¡å‡é«˜ï¼›D1D0æµ‹é‡é…ç½®ä½ï¼Œ00-æ­£å¸¸ï¼Œ01æ­£ååŽ‹ï¼Œ10è´ŸååŽ‹
 		HMC5883_Buffer_Tx[0]=0x00;
 		HMC5883_Buffer_Tx[1]=0x10;
-// 	Buffer_Tx1[1]=0x01;  //×Ô²âÊÔ
+// 	Buffer_Tx1[1]=0x01;  //è‡ªæµ‹è¯•
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 	
-			//¼Ä´æÆ÷B£¬ÔöÒæÅäÖÃ£¬¸ß3Î»´Ó000~111ÒÀ´Î¼õÉÙ£¬µÍ5Î»±ØÐëÎª0
+			//å¯„å­˜å™¨Bï¼Œå¢žç›Šé…ç½®ï¼Œé«˜3ä½ä»Ž000~111ä¾æ¬¡å‡å°‘ï¼Œä½Ž5ä½å¿…é¡»ä¸º0
 		HMC5883_Buffer_Tx[0]=0x01;
 		HMC5883_Buffer_Tx[1]=0x00;
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 	
-			//Ä£Ê½¼Ä´æÆ÷£¬D7~D2±ØÐëÎª0£¬D1D0Ä£Ê½Ñ¡Ôñ£¬00Á¬Ðø²âÁ¿£¬01µ¥´Î²âÁ¿£¬10»ò11ÏÐÖÃ
+			//æ¨¡å¼å¯„å­˜å™¨ï¼ŒD7~D2å¿…é¡»ä¸º0ï¼ŒD1D0æ¨¡å¼é€‰æ‹©ï¼Œ00è¿žç»­æµ‹é‡ï¼Œ01å•æ¬¡æµ‹é‡ï¼Œ10æˆ–11é—²ç½®
 		HMC5883_Buffer_Tx[0]=0x02;
-		HMC5883_Buffer_Tx[1]=0x00; //Á¬Ðø²âÁ¿
-// 	Buffer_Tx1[1]=0x01; //µ¥´Î²âÁ¿
+		HMC5883_Buffer_Tx[1]=0x00; //è¿žç»­æµ‹é‡
+// 	Buffer_Tx1[1]=0x01; //å•æ¬¡æµ‹é‡
 	  return I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 	
 }
@@ -104,18 +104,18 @@ Status HMC5883_RunSelfTest(struct HMC5883_s *var)
 {
 		Delay_ms(100);
 		HMC5883_Buffer_Tx[0]=0x00;
-		HMC5883_Buffer_Tx[1]=0x11;  //×Ô²âÊÔ£¬Õý¼«ÐÔ
+		HMC5883_Buffer_Tx[1]=0x11;  //è‡ªæµ‹è¯•ï¼Œæ­£æžæ€§
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 	
-			//¼Ä´æÆ÷B£¬ÔöÒæÅäÖÃ£¬¸ß3Î»´Ó000~111ÒÀ´Î¼õÉÙ£¬µÍ5Î»±ØÐëÎª0
+			//å¯„å­˜å™¨Bï¼Œå¢žç›Šé…ç½®ï¼Œé«˜3ä½ä»Ž000~111ä¾æ¬¡å‡å°‘ï¼Œä½Ž5ä½å¿…é¡»ä¸º0
 		HMC5883_Buffer_Tx[0]=0x01;
 		HMC5883_Buffer_Tx[1]=0x20;
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 	
 		Delay_ms(100);
-			//Ä£Ê½¼Ä´æÆ÷£¬D7~D2±ØÐëÎª0£¬D1D0Ä£Ê½Ñ¡Ôñ£¬00Á¬Ðø²âÁ¿£¬01µ¥´Î²âÁ¿£¬10»ò11ÏÐÖÃ
+			//æ¨¡å¼å¯„å­˜å™¨ï¼ŒD7~D2å¿…é¡»ä¸º0ï¼ŒD1D0æ¨¡å¼é€‰æ‹©ï¼Œ00è¿žç»­æµ‹é‡ï¼Œ01å•æ¬¡æµ‹é‡ï¼Œ10æˆ–11é—²ç½®
 		HMC5883_Buffer_Tx[0]=0x02;
-		HMC5883_Buffer_Tx[1]=0x01; //µ¥´Î²âÁ¿
+		HMC5883_Buffer_Tx[1]=0x01; //å•æ¬¡æµ‹é‡
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 		
 		Delay_ms(100);
@@ -127,20 +127,20 @@ Status HMC5883_RunSelfTest(struct HMC5883_s *var)
 			return Error;
 		
 		HMC5883_Buffer_Tx[0]=0x00;
-		HMC5883_Buffer_Tx[1]=0x10;  //Õý³£
+		HMC5883_Buffer_Tx[1]=0x10;  //æ­£å¸¸
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 		HMC5883_Buffer_Tx[0]=0x02;
-		HMC5883_Buffer_Tx[1]=0x00; //Á¬Ðø²âÁ¿
+		HMC5883_Buffer_Tx[1]=0x00; //è¿žç»­æµ‹é‡
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 		
 		Delay_ms(1000);
 		
 		HMC5883_Buffer_Tx[0]=0x00;
-		HMC5883_Buffer_Tx[1]=0x12;  //×Ô²âÊÔ£¬¸º¼«ÐÔ
-		//Ä£Ê½¼Ä´æÆ÷£¬D7~D2±ØÐëÎª0£¬D1D0Ä£Ê½Ñ¡Ôñ£¬00Á¬Ðø²âÁ¿£¬01µ¥´Î²âÁ¿£¬10»ò11ÏÐÖÃ
+		HMC5883_Buffer_Tx[1]=0x12;  //è‡ªæµ‹è¯•ï¼Œè´Ÿæžæ€§
+		//æ¨¡å¼å¯„å­˜å™¨ï¼ŒD7~D2å¿…é¡»ä¸º0ï¼ŒD1D0æ¨¡å¼é€‰æ‹©ï¼Œ00è¿žç»­æµ‹é‡ï¼Œ01å•æ¬¡æµ‹é‡ï¼Œ10æˆ–11é—²ç½®
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 					
-		//¼Ä´æÆ÷B£¬ÔöÒæÅäÖÃ£¬¸ß3Î»´Ó000~111ÒÀ´Î¼õÉÙ£¬µÍ5Î»±ØÐëÎª0
+		//å¯„å­˜å™¨Bï¼Œå¢žç›Šé…ç½®ï¼Œé«˜3ä½ä»Ž000~111ä¾æ¬¡å‡å°‘ï¼Œä½Ž5ä½å¿…é¡»ä¸º0
 		HMC5883_Buffer_Tx[0]=0x01;
 		HMC5883_Buffer_Tx[1]=0x20;
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
@@ -148,7 +148,7 @@ Status HMC5883_RunSelfTest(struct HMC5883_s *var)
 		Delay_ms(100);
 		
 		HMC5883_Buffer_Tx[0]=0x02;
-		HMC5883_Buffer_Tx[1]=0x01; //µ¥´Î²âÁ¿
+		HMC5883_Buffer_Tx[1]=0x01; //å•æ¬¡æµ‹é‡
 	  I2C_Master_BufferWrite(HMC5883_I2C, HMC5883_Buffer_Tx,2,Polling, HMC5883_ADDR);
 		
 		Delay_ms(100);
@@ -159,20 +159,20 @@ Status HMC5883_RunSelfTest(struct HMC5883_s *var)
 		if(I2C_Master_BufferRead(HMC5883_I2C,HMC5883_Buffer_Rx,6,Polling, HMC5883_ADDR) == Error)
 			return Error;
 		
-		InitHMC5883(); //ÖØÐÂ³õÊ¼»¯ÎªÔ­À´Ä£Ê½
+		InitHMC5883(); //é‡æ–°åˆå§‹åŒ–ä¸ºåŽŸæ¥æ¨¡å¼
 		return Success;
 }
 
-//»ñÈ¡HMC 5883×´Ì¬¼Ä´æÆ÷£¬
-// D1£ºÊý¾ÝÊä³ö¼Ä´æÆ÷Ëø´æ¡£µ±Áù¸öÊý¾ÝÊä³ö¼Ä´æÆ÷ÉÏµÄÒ»Ð©µ«²»ÊÇÈ«²¿Êý¾Ý±»
-// ¶ÁÈ¡Ê±£¬¸ÃÎ»ÖÃÎ»¡£µ±´ËÎ»ÖÃÎ»Ê±£¬Áù¸öÊý¾ÝÊä³ö¼Ä´æÆ÷±»Ëø¶¨ÇÒÈÎºÎÐÂ
-// µÄÊý¾Ý½«²»»á±»¸üÐÂÖÁÕâÐ©¼Ä´æÆ÷ÖÐ£¬³ý·Ç·ûºÏÒÔÏÂÈý¸öÌõ¼þÖ®Ò»£º Ò»£¬
-// ËùÓÐ6¸ö¼Ä´æÆ÷ÒÑ±»¶ÁÈ¡»òÄ£Ê½¸Ä±ä£¬¶þ£¬Ä£Ê½·¢Éú±ä»¯£¬Èý£¬²âÁ¿ÅäÖÃ·¢
-// Éú±ä»¯¡£
-// D0£º×¼±¸¾ÍÐ÷Î»¡£µ±Êý¾Ý¶¼Ð´ÈëÁË6¸öÊý¾Ý¼Ä´æÆ÷£¬¸ÃÎ»ÖÃÎ»¡£ÔÚÒ»¸ö»ò¼¸¸öÊý
-// ¾ÝÐ´ÈëÊä³ö¼Ä´æÆ÷ÒÔºóÇÒÔÚ×°ÖÃ¿ªÊ¼ÏòÊý¾ÝÊä³ö¼Ä´æÆ÷Ð´ÈëÊý¾ÝÊ±¸ÃÎ»±»
-// Çå³ý¡£µ±RDYÎ»ÒÑÇå³ý£¬ RDYÓ¦±£³ÖÇå³ý×´Ì¬ÖÁÉÙ250Î¢Ãë¡£ DRDYÒý½Å¿É±»
-// ÓÃÀ´×÷ÎªÒ»ÖÖÌæ´úµÄ×´Ì¬¼Ä´æÆ÷µÄ¼à²â×°ÖÃÎª²âÁ¿Êý¾Ý¡£
+//èŽ·å–HMC 5883çŠ¶æ€å¯„å­˜å™¨ï¼Œ
+// D1ï¼šæ•°æ®è¾“å‡ºå¯„å­˜å™¨é”å­˜ã€‚å½“å…­ä¸ªæ•°æ®è¾“å‡ºå¯„å­˜å™¨ä¸Šçš„ä¸€äº›ä½†ä¸æ˜¯å…¨éƒ¨æ•°æ®è¢«
+// è¯»å–æ—¶ï¼Œè¯¥ä½ç½®ä½ã€‚å½“æ­¤ä½ç½®ä½æ—¶ï¼Œå…­ä¸ªæ•°æ®è¾“å‡ºå¯„å­˜å™¨è¢«é”å®šä¸”ä»»ä½•æ–°
+// çš„æ•°æ®å°†ä¸ä¼šè¢«æ›´æ–°è‡³è¿™äº›å¯„å­˜å™¨ä¸­ï¼Œé™¤éžç¬¦åˆä»¥ä¸‹ä¸‰ä¸ªæ¡ä»¶ä¹‹ä¸€ï¼š ä¸€ï¼Œ
+// æ‰€æœ‰6ä¸ªå¯„å­˜å™¨å·²è¢«è¯»å–æˆ–æ¨¡å¼æ”¹å˜ï¼ŒäºŒï¼Œæ¨¡å¼å‘ç”Ÿå˜åŒ–ï¼Œä¸‰ï¼Œæµ‹é‡é…ç½®å‘
+// ç”Ÿå˜åŒ–ã€‚
+// D0ï¼šå‡†å¤‡å°±ç»ªä½ã€‚å½“æ•°æ®éƒ½å†™å…¥äº†6ä¸ªæ•°æ®å¯„å­˜å™¨ï¼Œè¯¥ä½ç½®ä½ã€‚åœ¨ä¸€ä¸ªæˆ–å‡ ä¸ªæ•°
+// æ®å†™å…¥è¾“å‡ºå¯„å­˜å™¨ä»¥åŽä¸”åœ¨è£…ç½®å¼€å§‹å‘æ•°æ®è¾“å‡ºå¯„å­˜å™¨å†™å…¥æ•°æ®æ—¶è¯¥ä½è¢«
+// æ¸…é™¤ã€‚å½“RDYä½å·²æ¸…é™¤ï¼Œ RDYåº”ä¿æŒæ¸…é™¤çŠ¶æ€è‡³å°‘250å¾®ç§’ã€‚ DRDYå¼•è„šå¯è¢«
+// ç”¨æ¥ä½œä¸ºä¸€ç§æ›¿ä»£çš„çŠ¶æ€å¯„å­˜å™¨çš„ç›‘æµ‹è£…ç½®ä¸ºæµ‹é‡æ•°æ®ã€‚
 Status HMC5883_GetStatus(uint8_t *status)
 {
 		HMC5883_Buffer_Tx[0]=0x09;

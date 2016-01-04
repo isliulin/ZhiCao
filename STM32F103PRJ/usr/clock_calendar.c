@@ -18,18 +18,18 @@
   * <h2><center>&copy; COPYRIGHT 2009 STMicroelectronics</center></h2>
   */ 
 /*
-BKP_DR1±£´æÊÇ·ñÒÑ¾­ÅäÖÃÈÕÀúÊ±¼ä
-BKP_DR2¡¢3¡¢4±£´æÔÂ¡¢ÈÕ¡¢Äê
-BKP_DR8¡¢9¡¢10±£´æÄÖÖÓÔÂ¡¢ÈÕ¡¢Äê
-BKP_DR11~24±£´æÖÜÒ»µ½ÖÜÎåµÄ¹¤×÷Ê±¼ä£¨ÆğÊ¼Ê±·ÖºÍ½áÊøÊ±·Ö£©
+BKP_DR1ä¿å­˜æ˜¯å¦å·²ç»é…ç½®æ—¥å†æ—¶é—´
+BKP_DR2ã€3ã€4ä¿å­˜æœˆã€æ—¥ã€å¹´
+BKP_DR8ã€9ã€10ä¿å­˜é—¹é’Ÿæœˆã€æ—¥ã€å¹´
+BKP_DR11~24ä¿å­˜å‘¨ä¸€åˆ°å‘¨äº”çš„å·¥ä½œæ—¶é—´ï¼ˆèµ·å§‹æ—¶åˆ†å’Œç»“æŸæ—¶åˆ†ï¼‰
 */
 
 /* Includes ------------------------------------------------------------------*/
 #include "clock_calendar.h"
 #include "stdio.h"
 
-//#define RTCClockSource_LSI   /* ÓÃÄÚÖÃµÄ32K Ê±ÖÓ¾§ÕñÔ´ */
-#define RTCClockSource_LSE   /* ÓÃÍâÖÃµÄ32.768K Ê±ÖÓ¾§ÕñÔ´ */
+//#define RTCClockSource_LSI   /* ç”¨å†…ç½®çš„32K æ—¶é’Ÿæ™¶æŒ¯æº */
+#define RTCClockSource_LSE   /* ç”¨å¤–ç½®çš„32.768K æ—¶é’Ÿæ™¶æŒ¯æº */
 
 /* Private variables--------------------------------------------------------- */
 // uint8_t ClockSource;
@@ -75,46 +75,46 @@ struct WorkTime_s s_WorkTimeVar[7];
 void RTC_Configuration()
 {
 		uint8_t i;
-	/* Ê¹ÄÜ PWR ºÍ BKP µÄÊ±ÖÓ */
+	/* ä½¿èƒ½ PWR å’Œ BKP çš„æ—¶é’Ÿ */
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
   
-  /* ÔÊĞí·ÃÎÊBKPÇøÓò */
+  /* å…è®¸è®¿é—®BKPåŒºåŸŸ */
   PWR_BackupAccessCmd(ENABLE);
 	
-	if(BKP_ReadBackupRegister(BKP_DR1) != CONFIGURATION_DONE)		     //ÅĞ¶Ï±£´æÔÚ±¸·İ¼Ä´æÆ÷µÄRTC±êÖ¾ÊÇ·ñÒÑ¾­±»ÅäÖÃ¹ı
+	if(BKP_ReadBackupRegister(BKP_DR1) != CONFIGURATION_DONE)		     //åˆ¤æ–­ä¿å­˜åœ¨å¤‡ä»½å¯„å­˜å™¨çš„RTCæ ‡å¿—æ˜¯å¦å·²ç»è¢«é…ç½®è¿‡
   {
 //     printf("\r\n\n RTC not yet configured....");
-//  /* Ê¹ÄÜ PWR ºÍ BKP µÄÊ±ÖÓ */
+//  /* ä½¿èƒ½ PWR å’Œ BKP çš„æ—¶é’Ÿ */
 //   RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 //   
-//   /* ÔÊĞí·ÃÎÊBKPÇøÓò */
+//   /* å…è®¸è®¿é—®BKPåŒºåŸŸ */
 //   PWR_BackupAccessCmd(ENABLE);
 
-  /* ¸´Î»BKP */
+  /* å¤ä½BKP */
   BKP_DeInit();
 
 #ifdef RTCClockSource_LSI
-  /* Ê¹ÄÜÄÚ²¿RTCÊ±ÖÓ */ 
+  /* ä½¿èƒ½å†…éƒ¨RTCæ—¶é’Ÿ */ 
   RCC_LSICmd(ENABLE);
-  /* µÈ´ıRTCÄÚ²¿Ê±ÖÓ¾ÍĞ÷ */
+  /* ç­‰å¾…RTCå†…éƒ¨æ—¶é’Ÿå°±ç»ª */
   while(RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
   {
   }
-  /* Ñ¡ÔñRTCÄÚ²¿Ê±ÖÓÎªRTCÊ±ÖÓ */
+  /* é€‰æ‹©RTCå†…éƒ¨æ—¶é’Ÿä¸ºRTCæ—¶é’Ÿ */
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);  
 #elif defined	RTCClockSource_LSE  
-  /* Ê¹ÄÜRTCÍâ²¿Ê±ÖÓ */
+  /* ä½¿èƒ½RTCå¤–éƒ¨æ—¶é’Ÿ */
   RCC_LSEConfig(RCC_LSE_ON);
-  /* µÈ´ıRTCÍâ²¿Ê±ÖÓ¾ÍĞ÷ */
+  /* ç­‰å¾…RTCå¤–éƒ¨æ—¶é’Ÿå°±ç»ª */
   while(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
   {	    
   }
 
-  /* Ñ¡ÔñRTCÍâ²¿Ê±ÖÓÎªRTCÊ±ÖÓ */
+  /* é€‰æ‹©RTCå¤–éƒ¨æ—¶é’Ÿä¸ºRTCæ—¶é’Ÿ */
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);  
 #endif
 
-  /* Ê¹ÄÜRTCÊ±ÖÓ */
+  /* ä½¿èƒ½RTCæ—¶é’Ÿ */
   RCC_RTCCLKCmd(ENABLE);
 
 #ifdef RTCClockOutput_Enable  
@@ -122,36 +122,36 @@ void RTC_Configuration()
   BKP_TamperPinCmd(DISABLE); /* To output RTCCLK/64 on Tamper pin, the tamper
                                functionality must be disabled */
                                
-  /* Ê¹ÄÜÔÚTAMPER½ÅÊä³öRTCÊ±ÖÓ */
+  /* ä½¿èƒ½åœ¨TAMPERè„šè¾“å‡ºRTCæ—¶é’Ÿ */
   BKP_RTCCalibrationClockOutputCmd(ENABLE);
 #endif 
 
-  /* µÈ´ıRTC¼Ä´æÆ÷Í¬²½ */
+  /* ç­‰å¾…RTCå¯„å­˜å™¨åŒæ­¥ */
   RTC_WaitForSynchro();
 
-  /* µÈ´ıĞ´RTC¼Ä´æÆ÷Íê³É */
+  /* ç­‰å¾…å†™RTCå¯„å­˜å™¨å®Œæˆ */
   RTC_WaitForLastTask();
   
-  /* Ê¹ÄÜRTCÃëÖĞ¶Ï */  
+  /* ä½¿èƒ½RTCç§’ä¸­æ–­ */  
   RTC_ITConfig(RTC_IT_SEC, ENABLE);
 
-  /* µÈ´ıĞ´RTC¼Ä´æÆ÷Íê³É */
+  /* ç­‰å¾…å†™RTCå¯„å­˜å™¨å®Œæˆ */
   RTC_WaitForLastTask();
   
-  /* ÉèÖÃRTCÔ¤·ÖÆµ */
+  /* è®¾ç½®RTCé¢„åˆ†é¢‘ */
 #ifdef RTCClockSource_LSI
   RTC_SetPrescaler(31999);            /* RTC period = RTCCLK/RTC_PR = (32.000 KHz)/(31999+1) */
 #elif defined	RTCClockSource_LSE
   RTC_SetPrescaler(32767);            /* RTC period = RTCCLK/RTC_PR = (32.768 KHz)/(32767+1) */
 #endif
   
-  /* µÈ´ıĞ´RTC¼Ä´æÆ÷Íê³É */
+  /* ç­‰å¾…å†™RTCå¯„å­˜å™¨å®Œæˆ */
   RTC_WaitForLastTask();
 //printf("\r\n RTC configured....");
 
-	BKP_WriteBackupRegister(BKP_DR1, CONFIGURATION_DONE);    	      //RTCÉèÖÃºó£¬½«ÒÑÅäÖÃ±êÖ¾Ğ´Èë±¸·İÊı¾İ¼Ä´æÆ÷ 
+	BKP_WriteBackupRegister(BKP_DR1, CONFIGURATION_DONE);    	      //RTCè®¾ç½®åï¼Œå°†å·²é…ç½®æ ‡å¿—å†™å…¥å¤‡ä»½æ•°æ®å¯„å­˜å™¨ 
 	
-	//ÉèÖÃÄ¬ÈÏÈÕÆÚ¡¢Ê±¼ä¡¢¹¤×÷Ê±¼ä
+	//è®¾ç½®é»˜è®¤æ—¥æœŸã€æ—¶é—´ã€å·¥ä½œæ—¶é—´
 	s_DateStructVar.Month=DEFAULT_MONTH ;
 	s_DateStructVar.Day=DEFAULT_DAY;
 	s_DateStructVar.Year=DEFAULT_YEAR;
@@ -173,23 +173,23 @@ void RTC_Configuration()
   }
   else
   {	     
-//      if(RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)	  //¼ì²éÊÇ·ñµôµçÖØÆô
+//      if(RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)	  //æ£€æŸ¥æ˜¯å¦æ‰ç”µé‡å¯
 //      {
 //        printf("\r\n\n Power On Reset occurred....");
 //      }												     
-//      else if(RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET) //¼ì²éÊÇ·ñreset¸´Î»
+//      else if(RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET) //æ£€æŸ¥æ˜¯å¦resetå¤ä½
 //      {
 //        printf("\r\n\n External Reset occurred....");
 //      }
 //      printf("\r\n No need to configure RTC....");  
 		
-    RTC_WaitForSynchro();								   //µÈ´ıRTC¼Ä´æÆ÷±»Í¬²½ 
-    RTC_ITConfig(RTC_IT_SEC, ENABLE);					   //Ê¹ÄÜÃëÖĞ¶Ï
-    RTC_WaitForLastTask();								   //µÈ´ıĞ´ÈëÍê³É
+    RTC_WaitForSynchro();								   //ç­‰å¾…RTCå¯„å­˜å™¨è¢«åŒæ­¥ 
+    RTC_ITConfig(RTC_IT_SEC, ENABLE);					   //ä½¿èƒ½ç§’ä¸­æ–­
+    RTC_WaitForLastTask();								   //ç­‰å¾…å†™å…¥å®Œæˆ
 		
 		LoadWorkTime();
   }
-  RCC_ClearFlag();										   //Çå³ı¸´Î»±êÖ¾
+  RCC_ClearFlag();										   //æ¸…é™¤å¤ä½æ ‡å¿—
 	
   /* Check if how many days are elapsed in power down/Low Power Mode-
    Updates Date that many Times*/

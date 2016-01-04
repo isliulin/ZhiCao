@@ -28,7 +28,7 @@
 
 
 /* Private variables ---------------------------------------------------------*/
-static __IO uint8_t TimeStamp_ms_Counter=0; //ms¼ÆÊı±äÁ¿£¬ÔÚSysTick_HandlerÖĞÃ¿10us¼Ó1£¬¼ÓÂú100£¬ÔòTimerStamp_ms¼Ó1
+static __IO uint8_t TimeStamp_ms_Counter=0; //msè®¡æ•°å˜é‡ï¼Œåœ¨SysTick_Handlerä¸­æ¯10usåŠ 1ï¼ŒåŠ æ»¡100ï¼Œåˆ™TimerStamp_msåŠ 1
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -153,7 +153,7 @@ void SysTick_Handler(void)
   * @param  None
   * @retval : None
   */
-void USART1_IRQHandler(void)      //´®¿Ú1 ÖĞ¶Ï·şÎñ³ÌĞò
+void USART1_IRQHandler(void)      //ä¸²å£1 ä¸­æ–­æœåŠ¡ç¨‹åº
 {
 
 }
@@ -164,7 +164,7 @@ void USART1_IRQHandler(void)      //´®¿Ú1 ÖĞ¶Ï·şÎñ³ÌĞò
   * @param  None
   * @retval : None
   */
-void USART2_IRQHandler(void)      //´®¿Ú2 ÖĞ¶Ï·şÎñ³ÌĞò
+void USART2_IRQHandler(void)      //ä¸²å£2 ä¸­æ–­æœåŠ¡ç¨‹åº
 {
 
   
@@ -250,8 +250,8 @@ void I2C1_ER_IRQHandler(void)
   */
 
 /*******************************************************************************
-* Function Name  : EXTI5 ÖĞ¶Ïº¯Êı
-* Description    : NRF24L01ÖĞ¶Ï·şÎñ³ÌĞò
+* Function Name  : EXTI5 ä¸­æ–­å‡½æ•°
+* Description    : NRF24L01ä¸­æ–­æœåŠ¡ç¨‹åº
 * Input          : None
 * Output         : None
 * Return         : None
@@ -265,21 +265,21 @@ void EXTI9_5_IRQHandler(void)
 
 void TIM3_IRQHandler(void)
 {
- if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)	    //ÅĞ¶Ï×´Ì¬¼Ä´æÆ÷ÊÇ·ñ·¢ÉúÁËUpdateÖĞ¶Ï£¬Êı¾İÓĞÒç³ö
+ if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)	    //åˆ¤æ–­çŠ¶æ€å¯„å­˜å™¨æ˜¯å¦å‘ç”Ÿäº†Updateä¸­æ–­ï¼Œæ•°æ®æœ‰æº¢å‡º
   {
-    TIM_ClearITPendingBit(TIM3, TIM_IT_Update);			//Èí¼şÇå³ı×´Ì¬¼Ä´æÆ÷UpdateÖĞ¶Ï£¬ÖĞ¶Ï±êÖ¾
-		if(TIM3->CR1 & 0x0010)  //·´×ª£¬Ôò¼õ1
+    TIM_ClearITPendingBit(TIM3, TIM_IT_Update);			//è½¯ä»¶æ¸…é™¤çŠ¶æ€å¯„å­˜å™¨Updateä¸­æ–­ï¼Œä¸­æ–­æ ‡å¿—
+		if(TIM3->CR1 & 0x0010)  //åè½¬ï¼Œåˆ™å‡1
 			nEncOverFlowCount--;
-		else										//Õı×ª£¬¼Ó1
+		else										//æ­£è½¬ï¼ŒåŠ 1
 			nEncOverFlowCount++;
   }
 }
 
 void TIM2_IRQHandler(void)
 {
- if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)	    //ÅĞ¶Ï×´Ì¬¼Ä´æÆ÷ÊÇ·ñ·¢ÉúÁËUpdateÖĞ¶Ï£¬Êı¾İÓĞÒç³ö
+ if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)	    //åˆ¤æ–­çŠ¶æ€å¯„å­˜å™¨æ˜¯å¦å‘ç”Ÿäº†Updateä¸­æ–­ï¼Œæ•°æ®æœ‰æº¢å‡º
   {
-    TIM_ClearITPendingBit(TIM2, TIM_IT_Update);			//Èí¼şÇå³ı×´Ì¬¼Ä´æÆ÷UpdateÖĞ¶Ï£¬ÖĞ¶Ï±êÖ¾
+    TIM_ClearITPendingBit(TIM2, TIM_IT_Update);			//è½¯ä»¶æ¸…é™¤çŠ¶æ€å¯„å­˜å™¨Updateä¸­æ–­ï¼Œä¸­æ–­æ ‡å¿—
 		
 		Controller_Update();
   }

@@ -43,12 +43,12 @@ void USART2_Config(void)
 // 	/* USART1 GPIO config */ 
 // 	/* Configure USART2 Tx (PA.09) as alternate function push-pull */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;	         		 //USART2 TX
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;    		 //¸´ÓÃÍÆÍìÊä³ö
-  GPIO_Init(GPIOA, &GPIO_InitStructure);		    		 //A¶Ë¿Ú 
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;    		 //å¤ç”¨æ¨æŒ½è¾“å‡º
+  GPIO_Init(GPIOA, &GPIO_InitStructure);		    		 //Aç«¯å£ 
 
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;	         	 	 //USART2 RX
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;   	 //¸´ÓÃ¿ªÂ©ÊäÈë
-  GPIO_Init(GPIOA, &GPIO_InitStructure);		         	 //A¶Ë¿Ú 
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;   	 //å¤ç”¨å¼€æ¼è¾“å…¥
+  GPIO_Init(GPIOA, &GPIO_InitStructure);		         	 //Aç«¯å£ 
 
 	/* USART2 mode config */
 	USART_InitStructure.USART_BaudRate = 19200;
@@ -67,11 +67,11 @@ void USART2_Config(void)
 }
 
 /******************************************************
-		¸ñÊ½»¯´®¿ÚÊä³öº¯Êı
-        "\r"	»Ø³µ·û	   USART_OUT(USART1, "abcdefg\r")   
-		"\n"	»»ĞĞ·û	   USART_OUT(USART1, "abcdefg\r\n")
-		"%s"	×Ö·û´®	   USART_OUT(USART1, "×Ö·û´®ÊÇ£º%s","abcdefg")
-		"%d"	Ê®½øÖÆ	   USART_OUT(USART1, "a=%d",10)
+		æ ¼å¼åŒ–ä¸²å£è¾“å‡ºå‡½æ•°
+        "\r"	å›è½¦ç¬¦	   USART_OUT(USART1, "abcdefg\r")   
+		"\n"	æ¢è¡Œç¬¦	   USART_OUT(USART1, "abcdefg\r\n")
+		"%s"	å­—ç¬¦ä¸²	   USART_OUT(USART1, "å­—ç¬¦ä¸²æ˜¯ï¼š%s","abcdefg")
+		"%d"	åè¿›åˆ¶	   USART_OUT(USART1, "a=%d",10)
 **********************************************************/
 void USART_OUT(USART_TypeDef* USARTx, uint8_t *Data,...){ 
 	const char *s;
@@ -80,14 +80,14 @@ void USART_OUT(USART_TypeDef* USARTx, uint8_t *Data,...){
     va_list ap;
     va_start(ap, Data);
 
-	while(*Data!=0){				                          //ÅĞ¶ÏÊÇ·ñµ½´ï×Ö·û´®½áÊø·û
+	while(*Data!=0){				                          //åˆ¤æ–­æ˜¯å¦åˆ°è¾¾å­—ç¬¦ä¸²ç»“æŸç¬¦
 		if(*Data==0x5c){									  //'\'
 			switch (*++Data){
-				case 'r':							          //»Ø³µ·û
+				case 'r':							          //å›è½¦ç¬¦
 					USART_SendData(USARTx, 0x0d);	   
 					Data++;
 					break;
-				case 'n':							          //»»ĞĞ·û
+				case 'n':							          //æ¢è¡Œç¬¦
 					USART_SendData(USARTx, 0x0a);	
 					Data++;
 					break;
@@ -101,7 +101,7 @@ void USART_OUT(USART_TypeDef* USARTx, uint8_t *Data,...){
 		}
 		else if(*Data=='%'){									  //
 			switch (*++Data){				
-				case 's':										  //×Ö·û´®
+				case 's':										  //å­—ç¬¦ä¸²
                 	s = va_arg(ap, const char *);
                 	for ( ; *s; s++) {
                     	USART_SendData(USARTx,*s);
@@ -109,7 +109,7 @@ void USART_OUT(USART_TypeDef* USARTx, uint8_t *Data,...){
                 	}
 					Data++;
                 	break;
-            	case 'd':										  //Ê®½øÖÆ
+            	case 'd':										  //åè¿›åˆ¶
                 	d = va_arg(ap, int);
                 	itoa(d, buf, 10);
                 	for (s = buf; *s; s++) {
@@ -128,12 +128,12 @@ void USART_OUT(USART_TypeDef* USARTx, uint8_t *Data,...){
 	}
 }
 /******************************************************
-		ÕûĞÎÊı¾İ×ª×Ö·û´®º¯Êı
+		æ•´å½¢æ•°æ®è½¬å­—ç¬¦ä¸²å‡½æ•°
         char *itoa(int value, char *string, int radix)
-		radix=10 ±êÊ¾ÊÇ10½øÖÆ	·ÇÊ®½øÖÆ£¬×ª»»½á¹ûÎª0;  
+		radix=10 æ ‡ç¤ºæ˜¯10è¿›åˆ¶	éåè¿›åˆ¶ï¼Œè½¬æ¢ç»“æœä¸º0;  
 
-	    Àı£ºd=-379;
-		Ö´ĞĞ	itoa(d, buf, 10); ºó
+	    ä¾‹ï¼šd=-379;
+		æ‰§è¡Œ	itoa(d, buf, 10); å
 		
 		buf="-379"							   			  
 **********************************************************/
@@ -185,7 +185,7 @@ char *itoa(int value, char *string, int radix)
 
 } /* NCL_Itoa */
 
-//ÖØ¶¨Ïòprintfµ½´®¿Ú1
+//é‡å®šå‘printfåˆ°ä¸²å£1
 int fputc(int ch, FILE *f)
 {
 	USART_SendData(USART1, (unsigned char) ch);

@@ -2,18 +2,18 @@
 #ifndef _LCD_DRIVER_H_
 #define _LCD_DRIVER_H_
 
-//-----------------------------SPI ×ÜÏßÅäÖÃ--------------------------------------//
+//-----------------------------SPI æ€»çº¿é…ç½®--------------------------------------//
 #define USE_HARDWARE_SPI     1  //1:Enable Hardware SPI;0:USE Soft SPI
 
-//-------------------------ÆÁÄ»ÎïÀíÏñËØÉèÖÃ--------------------------------------//
+//-------------------------å±å¹•ç‰©ç†åƒç´ è®¾ç½®--------------------------------------//
 #define LCD_X_SIZE	        240
 #define LCD_Y_SIZE	        320
 
-/////////////////////////////////////ÓÃ»§ÅäÖÃÇø///////////////////////////////////	 
-//Ö§³ÖºáÊúÆÁ¿ìËÙ¶¨ÒåÇĞ»»
-#define USE_HORIZONTAL  		1	//¶¨ÒåÊÇ·ñÊ¹ÓÃºáÆÁ 		0,²»Ê¹ÓÃ.1,Ê¹ÓÃ.
+/////////////////////////////////////ç”¨æˆ·é…ç½®åŒº///////////////////////////////////	 
+//æ”¯æŒæ¨ªç«–å±å¿«é€Ÿå®šä¹‰åˆ‡æ¢
+#define USE_HORIZONTAL  		1	//å®šä¹‰æ˜¯å¦ä½¿ç”¨æ¨ªå± 		0,ä¸ä½¿ç”¨.1,ä½¿ç”¨.
 
-#ifdef USE_HORIZONTAL//Èç¹û¶¨ÒåÁËºáÆÁ 
+#ifdef USE_HORIZONTAL//å¦‚æœå®šä¹‰äº†æ¨ªå± 
 #define X_MAX_PIXEL	        LCD_Y_SIZE
 #define Y_MAX_PIXEL	        LCD_X_SIZE
 #else
@@ -34,25 +34,25 @@
 #define WHITE	0xffff
 #define BLACK	0x0000
 #define YELLOW  0xFFE0
-#define GRAY0   0xEF7D   	//»ÒÉ«0 3165 00110 001011 00101
-#define GRAY1   0x8410      	//»ÒÉ«1      00000 000000 00000
-#define GRAY2   0x4208      	//»ÒÉ«2  1111111111011111
+#define GRAY0   0xEF7D   	//ç°è‰²0 3165 00110 001011 00101
+#define GRAY1   0x8410      	//ç°è‰²1      00000 000000 00000
+#define GRAY2   0x4208      	//ç°è‰²2  1111111111011111
 
 
 
-//±¾²âÊÔ³ÌĞòÊ¹ÓÃµÄÊÇÄ£ÄâSPI½Ó¿ÚÇı¶¯
-//¿É×ÔÓÉ¸ü¸Ä½Ó¿ÚIOÅäÖÃ£¬Ê¹ÓÃÈÎÒâ×îÉÙ4 IO¼´¿ÉÍê³É±¾¿îÒº¾§Çı¶¯ÏÔÊ¾
+//æœ¬æµ‹è¯•ç¨‹åºä½¿ç”¨çš„æ˜¯æ¨¡æ‹ŸSPIæ¥å£é©±åŠ¨
+//å¯è‡ªç”±æ›´æ”¹æ¥å£IOé…ç½®ï¼Œä½¿ç”¨ä»»æ„æœ€å°‘4 IOå³å¯å®Œæˆæœ¬æ¬¾æ¶²æ™¶é©±åŠ¨æ˜¾ç¤º
 /******************************************************************************
-½Ó¿Ú¶¨ÒåÔÚLcd_Driver.hÄÚ¶¨Òå£¬Çë¸ù¾İ½ÓÏßĞŞ¸Ä²¢ĞŞ¸ÄÏàÓ¦IO³õÊ¼»¯LCD_GPIO_Init()
-#define LCD_CTRL   	  	GPIOB		//¶¨ÒåTFTÊı¾İ¶Ë¿Ú
-#define LCD_LED        	GPIO_Pin_9  //PB9 Á¬½ÓÖÁTFT -LED
-#define LCD_RS         	GPIO_Pin_10	//PB10Á¬½ÓÖÁTFT --RS
-#define LCD_CS        	GPIO_Pin_11 //PB11 Á¬½ÓÖÁTFT --CS
-#define LCD_RST     	GPIO_Pin_12	//PB12Á¬½ÓÖÁTFT --RST
-#define LCD_SCL        	GPIO_Pin_13	//PB13Á¬½ÓÖÁTFT -- CLK
-#define LCD_SDA        	GPIO_Pin_15	//PB15Á¬½ÓÖÁTFT - SDI
+æ¥å£å®šä¹‰åœ¨Lcd_Driver.hå†…å®šä¹‰ï¼Œè¯·æ ¹æ®æ¥çº¿ä¿®æ”¹å¹¶ä¿®æ”¹ç›¸åº”IOåˆå§‹åŒ–LCD_GPIO_Init()
+#define LCD_CTRL   	  	GPIOB		//å®šä¹‰TFTæ•°æ®ç«¯å£
+#define LCD_LED        	GPIO_Pin_9  //PB9 è¿æ¥è‡³TFT -LED
+#define LCD_RS         	GPIO_Pin_10	//PB10è¿æ¥è‡³TFT --RS
+#define LCD_CS        	GPIO_Pin_11 //PB11 è¿æ¥è‡³TFT --CS
+#define LCD_RST     	GPIO_Pin_12	//PB12è¿æ¥è‡³TFT --RST
+#define LCD_SCL        	GPIO_Pin_13	//PB13è¿æ¥è‡³TFT -- CLK
+#define LCD_SDA        	GPIO_Pin_15	//PB15è¿æ¥è‡³TFT - SDI
 *******************************************************************************/
-#define LCD_CTRL   	  	GPIOB		//¶¨ÒåTFTÊı¾İ¶Ë¿Ú
+#define LCD_CTRL   	  	GPIOB		//å®šä¹‰TFTæ•°æ®ç«¯å£
 #define LCD_LED        	GPIO_Pin_8  //MCU_PB9--->>TFT --BL
 #define LCD_RS         	GPIO_Pin_7	//PB11--->>TFT --RS/DC
 #define LCD_CS        	GPIO_Pin_12 //MCU_PB11--->>TFT --CS/CE
@@ -63,7 +63,7 @@
 
 //#define LCD_CS_SET(x) LCD_CTRL->ODR=(LCD_CTRL->ODR&~LCD_CS)|(x ? LCD_CS:0)
 
-//Òº¾§¿ØÖÆ¿ÚÖÃ1²Ù×÷Óï¾äºê¶¨Òå
+//æ¶²æ™¶æ§åˆ¶å£ç½®1æ“ä½œè¯­å¥å®å®šä¹‰
 #define	LCD_CS_SET  	GPIOB->BSRR=LCD_CS    
 #define	LCD_RS_SET  	GPIOC->BSRR=LCD_RS    
 #define	LCD_SDA_SET  	GPIOB->BSRR=LCD_SDA    
@@ -71,7 +71,7 @@
 #define	LCD_RST_SET  	GPIOC->BSRR=LCD_RST    
 #define	LCD_LED_SET  	GPIOC->BSRR=LCD_LED   
 
-//Òº¾§¿ØÖÆ¿ÚÖÃ0²Ù×÷Óï¾äºê¶¨Òå
+//æ¶²æ™¶æ§åˆ¶å£ç½®0æ“ä½œè¯­å¥å®å®šä¹‰
 #define	LCD_CS_CLR  	GPIOB->BRR=LCD_CS    
 #define	LCD_RS_CLR  	GPIOC->BRR=LCD_RS    
 #define	LCD_SDA_CLR  	GPIOB->BRR=LCD_SDA    
@@ -80,8 +80,8 @@
 #define	LCD_LED_CLR  	GPIOC->BRR=LCD_LED 
 
 
-#define LCD_DATAOUT(x) LCD_DATA->ODR=x; //Êı¾İÊä³ö
-#define LCD_DATAIN     LCD_DATA->IDR;   //Êı¾İÊäÈë
+#define LCD_DATAOUT(x) LCD_DATA->ODR=x; //æ•°æ®è¾“å‡º
+#define LCD_DATAIN     LCD_DATA->IDR;   //æ•°æ®è¾“å…¥
 
 #define LCD_WR_DATA(data){\
 LCD_RS_SET;\

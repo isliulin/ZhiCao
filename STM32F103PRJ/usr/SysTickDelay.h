@@ -2,23 +2,23 @@
 #define __SYSTICKDELAY_H
 
 #include "stm32f10x.h"
-//¶¨Ê±ÑÓÊ±³ÌĞò
+//å®šæ—¶å»¶æ—¶ç¨‹åº
 /*
-ÔÚmain.cµÄNVIC_Configurationº¯ÊıÖĞ
-ÉèÖÃSysTick_Config(720)£¬Ã¿10us²úÉúÒ»´ÎSysTick
-ÔÚstm32f10x_it.cÖĞµÄSysTick_Handler´¦ÀíSysTickÖĞ¶Ï£¬
-Ö´ĞĞTimingDelay_Decrement();
-²¢ÇÒÃ¿100¸ö10usÊ¹TimeStamp_ms¼Ó1
+åœ¨main.cçš„NVIC_Configurationå‡½æ•°ä¸­
+è®¾ç½®SysTick_Config(720)ï¼Œæ¯10usäº§ç”Ÿä¸€æ¬¡SysTick
+åœ¨stm32f10x_it.cä¸­çš„SysTick_Handlerå¤„ç†SysTickä¸­æ–­ï¼Œ
+æ‰§è¡ŒTimingDelay_Decrement();
+å¹¶ä¸”æ¯100ä¸ª10usä½¿TimeStamp_msåŠ 1
 */
-static __IO uint32_t TimingDelay; //SysTick¼ÆÊı±äÁ¿
+static __IO uint32_t TimingDelay; //SysTickè®¡æ•°å˜é‡
 extern __IO uint32_t TimeStamp_ms;
 
-void TimingDelay_Decrement(void);//»ñÈ¡½ÚÅÄ³ÌĞò
+void TimingDelay_Decrement(void);//è·å–èŠ‚æ‹ç¨‹åº
 
 
-void Delay_10us(__IO uint32_t nTime);//¶¨Ê±ÑÓÊ±³ÌĞò 10usÎªµ¥Î»
-void Delay_ms(__IO uint32_t nTime);//¶¨Ê±ÑÓÊ±³ÌĞò 1msÎªµ¥Î»
+void Delay_10us(__IO uint32_t nTime);//å®šæ—¶å»¶æ—¶ç¨‹åº 10usä¸ºå•ä½
+void Delay_ms(__IO uint32_t nTime);//å®šæ—¶å»¶æ—¶ç¨‹åº 1msä¸ºå•ä½
 
-//¶¨Ê±ÑÓÊ±³ÌĞò½áÊø
+//å®šæ—¶å»¶æ—¶ç¨‹åºç»“æŸ
 
 #endif

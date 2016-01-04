@@ -3,19 +3,19 @@
 #include "math.h"
 
 
-__IO uint32_t TimeStamp_ms=0; //ºÁÃë¾ø¶ÔÖµ
+__IO uint32_t TimeStamp_ms=0; //æ¯«ç§’ç»å¯¹å€¼
 /* Buffer of data to be received by I2C1 */
 uint8_t IIC_Buffer_Rx[25];
 /* Buffer of data to be transmitted by I2C1 */
 uint8_t IIC_Buffer_Tx[25] = {0x5, 0x6,0x8,0xA};
 
 //**************************************
-//³õÊ¼»¯MPU6050
+//åˆå§‹åŒ–MPU6050
 //**************************************
 int InitMPU6050()
 {
 	Status rtn;
-	//Single_WriteI2C(PWR_MGMT_1, 0x00);	//½â³ıĞİÃß×´Ì¬
+	//Single_WriteI2C(PWR_MGMT_1, 0x00);	//è§£é™¤ä¼‘çœ çŠ¶æ€
 	IIC_Buffer_Tx[0]=PWR_MGMT_1;
 	IIC_Buffer_Tx[1]=0x01;
   rtn=I2C_Master_BufferWrite(MPU6050_I2C, IIC_Buffer_Tx,2,Polling, MPU6050_Addr);
@@ -41,7 +41,7 @@ int InitMPU6050()
 	IIC_Buffer_Tx[1]=0x01;
   rtn=I2C_Master_BufferWrite(MPU6050_I2C, IIC_Buffer_Tx,2,Polling, MPU6050_Addr);
 	
-	//ÅäÖÃMotion Interrupt
+	//é…ç½®Motion Interrupt
 	//Single_WriteI2C(ACCEL_CONFIG, 0x01);
 	IIC_Buffer_Tx[0]=0x38;
 	IIC_Buffer_Tx[1]=0x41;
@@ -61,7 +61,7 @@ int InitMPU6050()
 }
 
 //**************************************
-//¶ÁÖ¸¶¨µØÖ·Êı¾İ
+//è¯»æŒ‡å®šåœ°å€æ•°æ®
 //**************************************
 uint16_t MPU6050_GetData(uint8_t REG_Address)
 {
@@ -79,11 +79,11 @@ uint16_t MPU6050_GetData(uint8_t REG_Address)
 		rtn=I2C_Master_BufferRead(MPU6050_I2C,IIC_Buffer_Rx,1,Polling, MPU6050_Addr);
 		if(rtn == Success) L=IIC_Buffer_Rx[0];
 		else L=0;
-	return (H<<8)+L;   //ºÏ³ÉÊı¾İ
+	return (H<<8)+L;   //åˆæˆæ•°æ®
 }
 
 //**************************************
-//Á¬Ğø¶Áax,ay,az,temperature,gx,gy,gzÊı¾İ
+//è¿ç»­è¯»ax,ay,az,temperature,gx,gy,gzæ•°æ®
 //**************************************
 int MPU6050_ReadRawData(struct MPU6050_RawData_s *s_IMUVar)
 {
@@ -175,12 +175,12 @@ int stm32_i2c_read(unsigned char slave_addr,
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid TimingDelay_Decrement(void)
-* ¹¦    ÄÜ£º»ñÈ¡½ÚÅÄ³ÌĞò
-* Èë¿Ú²ÎÊı£ºÎŞ
-* ³ö¿Ú²ÎÊı£ºÎŞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºÎŞ 
+* å    ç§°ï¼švoid TimingDelay_Decrement(void)
+* åŠŸ    èƒ½ï¼šè·å–èŠ‚æ‹ç¨‹åº
+* å…¥å£å‚æ•°ï¼šæ— 
+* å‡ºå£å‚æ•°ï¼šæ— 
+* è¯´    æ˜ï¼š
+* è°ƒç”¨æ–¹æ³•ï¼šæ—  
 ****************************************************************************/  
 void TimingDelay_Decrement(void)
 {
@@ -190,12 +190,12 @@ void TimingDelay_Decrement(void)
   }
 }
 /****************************************************************************
-* Ãû    ³Æ£ºvoid Delay_us(__IO uint32_t nTime)
-* ¹¦    ÄÜ£º¶¨Ê±ÑÓÊ±³ÌĞò 10usÎªµ¥Î»
-* Èë¿Ú²ÎÊı£ºÎŞ
-* ³ö¿Ú²ÎÊı£ºÎŞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºÎŞ 
+* å    ç§°ï¼švoid Delay_us(__IO uint32_t nTime)
+* åŠŸ    èƒ½ï¼šå®šæ—¶å»¶æ—¶ç¨‹åº 10usä¸ºå•ä½
+* å…¥å£å‚æ•°ï¼šæ— 
+* å‡ºå£å‚æ•°ï¼šæ— 
+* è¯´    æ˜ï¼š
+* è°ƒç”¨æ–¹æ³•ï¼šæ—  
 ****************************************************************************/  
 void Delay_us(__IO uint32_t nTime)
 { 
@@ -303,17 +303,17 @@ int dmpGetEuler(struct dmpEuler_s *data, struct dmpQuaternion_s *q) {
 }
 
 int dmpGetYawPitchRoll(struct dmpYawPitchRoll_s *data, struct dmpQuaternion_s *q, struct dmpGravity_s *gravity) {
-    // yaw: (about Z axis) Æ«º½½Ç
+    // yaw: (about Z axis) åèˆªè§’
     data->yaw = atan2(2*q -> x*q -> y - 2*q -> w*q -> z, 2*q -> w*q -> w + 2*q -> x*q -> x - 1);
-    // pitch: (nose up/down, about Y axis) ¸©Ñö½Ç
+    // pitch: (nose up/down, about Y axis) ä¿¯ä»°è§’
     data->pitch = atan(gravity -> x / sqrt(gravity -> y*gravity -> y + gravity -> z*gravity -> z));
-    // roll: (tilt left/right, about X axis) ºá¹ö½Ç
+    // roll: (tilt left/right, about X axis) æ¨ªæ»šè§’
     data->roll = atan(gravity -> y / sqrt(gravity -> x*gravity -> x + gravity -> z*gravity -> z));
     return 0;
 }
 
 
-//¶ÁÈ¡MPU6050 I2C Slave0 µÄÊı¾İ
+//è¯»å–MPU6050 I2C Slave0 çš„æ•°æ®
 int MPU6050_Read_Ext_Sens_Data(uint8_t RegAddr,uint8_t *buff, uint8_t length)
 {
 	Status rtn;

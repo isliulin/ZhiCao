@@ -1,6 +1,6 @@
 #include "TSL1401CCD.h"
 #include "math.h"
-/* ÆØ¹âÊ±¼ä£¬µ¥Î»ms */
+/* æ›å…‰æ—¶é—´ï¼Œå•ä½ms */
 u8 CCD_IntegrationTime = 10;
 
 void CCD_Init(void)
@@ -10,54 +10,54 @@ void CCD_Init(void)
 	
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	
 
-	//ÅäÖÃA0=SI, A1=CLK, 
+	//é…ç½®A0=SI, A1=CLK, 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;				     
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //¿ÚÏß·­×ªËÙ¶ÈÎª50MHz
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			 //å£çº¿ç¿»è½¬é€Ÿåº¦ä¸º50MHz
   GPIO_Init(GPIOA, &GPIO_InitStructure);	
 	
-	//ÅäÖÃPA2Ä£ÄâÊäÈë£¬A2=AO
+	//é…ç½®PA2æ¨¡æ‹Ÿè¾“å…¥ï¼ŒA2=AO
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-	GPIO_Init(GPIOA, &GPIO_InitStructure); // PA2,ÊäÈëÊ±²»ÓÃÉèÖÃËÙÂÊ
+	GPIO_Init(GPIOA, &GPIO_InitStructure); // PA2,è¾“å…¥æ—¶ä¸ç”¨è®¾ç½®é€Ÿç‡
 	
-		//ADCÅäÖÃ
+		//ADCé…ç½®
 	/* Resets ADC1 */ 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 	
 	ADC_DeInit(ADC1);
 
 
-	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;	//ADC1¹¤×÷ÔÚ¶ÀÁ¢Ä£Ê½
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;		//Ä£Êı×ª»»¹¤×÷ÔÚÉ¨ÃèÄ£Ê½£¨¶àÍ¨µÀ£©»¹ÊÇµ¥´Î£¨µ¥Í¨µÀ£©Ä£Ê½
-	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;	//Ä£Êı×ª»»¹¤×÷ÔÚÉ¨ÃèÄ£Ê½£¨¶àÍ¨µÀ£©»¹ÊÇµ¥´Î£¨µ¥Í¨µÀ£©Ä£Ê½
-	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;//×ª»»ÓÉÈí¼ş¶ø²»ÊÇÍâ²¿´¥·¢Æô¶¯
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;//ADCÊı¾İÓÒ¶ÔÆë
-	ADC_InitStructure.ADC_NbrOfChannel = 1;               //¹æ¶¨ÁËË³Ğò½øĞĞ¹æÔò×ª»»µÄADCÍ¨µÀµÄÊıÄ¿¡£Õâ¸öÊıÄ¿µÄÈ¡Öµ·¶Î§ÊÇ1µ½16
+	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;	//ADC1å·¥ä½œåœ¨ç‹¬ç«‹æ¨¡å¼
+	ADC_InitStructure.ADC_ScanConvMode = DISABLE;		//æ¨¡æ•°è½¬æ¢å·¥ä½œåœ¨æ‰«ææ¨¡å¼ï¼ˆå¤šé€šé“ï¼‰è¿˜æ˜¯å•æ¬¡ï¼ˆå•é€šé“ï¼‰æ¨¡å¼
+	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;	//æ¨¡æ•°è½¬æ¢å·¥ä½œåœ¨æ‰«ææ¨¡å¼ï¼ˆå¤šé€šé“ï¼‰è¿˜æ˜¯å•æ¬¡ï¼ˆå•é€šé“ï¼‰æ¨¡å¼
+	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;//è½¬æ¢ç”±è½¯ä»¶è€Œä¸æ˜¯å¤–éƒ¨è§¦å‘å¯åŠ¨
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;//ADCæ•°æ®å³å¯¹é½
+	ADC_InitStructure.ADC_NbrOfChannel = 1;               //è§„å®šäº†é¡ºåºè¿›è¡Œè§„åˆ™è½¬æ¢çš„ADCé€šé“çš„æ•°ç›®ã€‚è¿™ä¸ªæ•°ç›®çš„å–å€¼èŒƒå›´æ˜¯1åˆ°16
 	ADC_Init(ADC1, &ADC_InitStructure);
 	
-	/* ADC1 regular channels configuration [¹æÔòÄ£Ê½Í¨µÀÅäÖÃ]*/ 
+	/* ADC1 regular channels configuration [è§„åˆ™æ¨¡å¼é€šé“é…ç½®]*/ 
 
-	//ADC1 ¹æÔòÍ¨µÀÅäÖÃ
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_239Cycles5);	  //Í¨µÀ16ÑùÊ±¼ä 239.5ÖÜÆÚ
+	//ADC1 è§„åˆ™é€šé“é…ç½®
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_239Cycles5);	  //é€šé“16æ ·æ—¶é—´ 239.5å‘¨æœŸ
 	
 
-	//Ê¹ÄÜADC1 DMA 
+	//ä½¿èƒ½ADC1 DMA 
 	//ADC_DMACmd(ADC1, ENABLE);
-	//Ê¹ÄÜADC1
+	//ä½¿èƒ½ADC1
 	ADC_Cmd(ADC1, ENABLE);	
 	
-	// ³õÊ¼»¯ADC1Ğ£×¼¼Ä´æÆ÷
+	// åˆå§‹åŒ–ADC1æ ¡å‡†å¯„å­˜å™¨
 	ADC_ResetCalibration(ADC1);
-	//¼ì²âADC1Ğ£×¼¼Ä´æÆ÷³õÊ¼»¯ÊÇ·ñÍê³É
+	//æ£€æµ‹ADC1æ ¡å‡†å¯„å­˜å™¨åˆå§‹åŒ–æ˜¯å¦å®Œæˆ
 	while(ADC_GetResetCalibrationStatus(ADC1));
 	
-	//¿ªÊ¼Ğ£×¼ADC1
+	//å¼€å§‹æ ¡å‡†ADC1
 	ADC_StartCalibration(ADC1);
-	//¼ì²âÊÇ·ñÍê³ÉĞ£×¼
+	//æ£€æµ‹æ˜¯å¦å®Œæˆæ ¡å‡†
 	while(ADC_GetCalibrationStatus(ADC1));
 	
-	//ADC1×ª»»Æô¶¯
+	//ADC1è½¬æ¢å¯åŠ¨
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE);	
 	
 }
@@ -104,8 +104,8 @@ void CCD_ImageCapture(unsigned char * ImageData)
 
     //Delay 10us for sample the first pixel
     /**/
-    for(i = 0; i < 250; i++) {                    //¸ü¸Ä250£¬ÈÃCCDµÄÍ¼Ïñ¿´ÉÏÈ¥±È½ÏÆ½»¬£¬
-      CCD_SamplingDelay() ;  //200ns                  //°Ñ¸ÃÖµ¸Ä´ó»òÕß¸ÄĞ¡´ïµ½×Ô¼ºÂúÒâµÄ½á¹û¡£
+    for(i = 0; i < 250; i++) {                    //æ›´æ”¹250ï¼Œè®©CCDçš„å›¾åƒçœ‹ä¸Šå»æ¯”è¾ƒå¹³æ»‘ï¼Œ
+      CCD_SamplingDelay() ;  //200ns                  //æŠŠè¯¥å€¼æ”¹å¤§æˆ–è€…æ”¹å°è¾¾åˆ°è‡ªå·±æ»¡æ„çš„ç»“æœã€‚
     }
 
     //Sampling Pixel 1
@@ -139,20 +139,20 @@ void CCD_ImageCapture(unsigned char * ImageData)
 
 void CCD_CalculateIntegrationTime(u8 *Pixel) 
 {
-/* 128¸öÏñËØµãµÄÆ½¾ùADÖµ */
+/* 128ä¸ªåƒç´ ç‚¹çš„å¹³å‡ADå€¼ */
 u8 PixelAverageValue;
-/* 128¸öÏñËØµãµÄÆ½¾ùµçÑ¹ÖµµÄ10±¶ */
+/* 128ä¸ªåƒç´ ç‚¹çš„å¹³å‡ç”µå‹å€¼çš„10å€ */
 u8 PixelAverageVoltage;
-/* Éè¶¨Ä¿±êÆ½¾ùµçÑ¹Öµ£¬Êµ¼ÊµçÑ¹µÄ10±¶ */
+/* è®¾å®šç›®æ ‡å¹³å‡ç”µå‹å€¼ï¼Œå®é™…ç”µå‹çš„10å€ */
 s16 TargetPixelAverageVoltage = 25;
-/* Éè¶¨Ä¿±êÆ½¾ùµçÑ¹ÖµÓëÊµ¼ÊÖµµÄÆ«²î£¬Êµ¼ÊµçÑ¹µÄ10±¶ */
+/* è®¾å®šç›®æ ‡å¹³å‡ç”µå‹å€¼ä¸å®é™…å€¼çš„åå·®ï¼Œå®é™…ç”µå‹çš„10å€ */
 s16 PixelAverageVoltageError = 0;
-/* Éè¶¨Ä¿±êÆ½¾ùµçÑ¹ÖµÔÊĞíµÄÆ«²î£¬Êµ¼ÊµçÑ¹µÄ10±¶ */
+/* è®¾å®šç›®æ ‡å¹³å‡ç”µå‹å€¼å…è®¸çš„åå·®ï¼Œå®é™…ç”µå‹çš„10å€ */
 s16 TargetPixelAverageVoltageAllowError = 2;
 
-    /* ¼ÆËã128¸öÏñËØµãµÄÆ½¾ùADÖµ */
+    /* è®¡ç®—128ä¸ªåƒç´ ç‚¹çš„å¹³å‡ADå€¼ */
     PixelAverageValue = CCD_PixelAverage(128,Pixel);
-    /* ¼ÆËã128¸öÏñËØµãµÄÆ½¾ùµçÑ¹Öµ,Êµ¼ÊÖµµÄ10±¶ */
+    /* è®¡ç®—128ä¸ªåƒç´ ç‚¹çš„å¹³å‡ç”µå‹å€¼,å®é™…å€¼çš„10å€ */
     PixelAverageVoltage = (unsigned char)((int)PixelAverageValue * 25 / 194);
 
     PixelAverageVoltageError = TargetPixelAverageVoltage - PixelAverageVoltage;

@@ -1,6 +1,6 @@
 #include "Encoder.h"
 
-__IO int32_t nEncOverFlowCount = 0;  //±àÂëÆ÷Òç³ö´ÎÊı
+__IO int32_t nEncOverFlowCount = 0;  //ç¼–ç å™¨æº¢å‡ºæ¬¡æ•°
 
 void ENC_Init(void)
 {

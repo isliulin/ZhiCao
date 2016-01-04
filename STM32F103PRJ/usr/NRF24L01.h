@@ -23,7 +23,7 @@ extern unsigned char status_buf[TX_PLOAD_WIDTH];
 extern unsigned char flag,nrf_baud,nrf_Pipe,nrf_Pipe_r;
 
 
-//NRF24L01¼Ä´æÆ÷µØÖ·ÅäÖÃ
+//NRF24L01å¯„å­˜å™¨åœ°å€é…ç½®
 // BYTE type definition
 #ifndef _BYTE_DEF_
 #define _BYTE_DEF_
@@ -67,7 +67,7 @@ typedef unsigned char BYTE;
 #define RX_PW_P5        0x16  // 'RX payload width, pipe5' register address
 #define FIFO_STATUS     0x17  // 'FIFO Status Register' register address
 
-//º¯Êı¶¨Òå
+//å‡½æ•°å®šä¹‰
 void SPI1_NRF24L01_Init(void);
 void RX_Mode(void);
 void TX_Mode(void);
